@@ -19,7 +19,9 @@ func TestTokenize(t *testing.T) {
   			(if (< n 2)
       			n
       			(+ (fib (- n 1))
-         			(fib (- n 2)))))`, []string{"(", "defun", "fib", "(", "n", ")", "\"Return the nth Fibonacci number.\"", "(", "if", "(", "<", "n", "2", ")", "n", "+", "(", "fib", "(", "-", "n", "1", ")", "(", "fib", "(", "-", "n", "2", ")", ")", ")", ")", ")", ")", ")"}},
+         			(fib (- n 2)))))`, []string{"(", "defun", "fib", "(", "n", ")", "\"Return the nth Fibonacci number.\"", "(", "if", "(", "<", "n", "2", ")", "n", "(", "+", "(", "fib", "(", "-", "n", "1", ")", ")", "(", "fib", "(", "-", "n", "2", ")", ")", ")", ")", ")"}},
+		{`(let ((str "Hello, world!"))
+			(string-upcase str))`, []string{"(", "let", "(", "(", "str", "\"Hello, world!\"", ")", ")", "(", "string-upcase", "str", ")", ")"}},
 	}
 
 	tokenizer := NewTokenizer()
