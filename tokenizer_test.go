@@ -39,6 +39,13 @@ var tokenizerTests = []struct {
 		`((lambda (x y) (+ x y)) 5 10)`,
 		[]string{"(", "(", "lambda", "(", "x", "y", ")", "(", "+", "x", "y", ")", ")", "5", "10", ")"},
 	},
+	{
+		`(defun fact (n)
+  			(if (<= n 1)
+    			1
+    			(* n (fact (- n 1)))))`,
+		[]string{"(", "defun", "fact", "(", "n", ")", "(", "if", "(", "<=", "n", "1", ")", "1", "(", "*", "n", "(", "fact", "(", "-", "n", "1", ")", ")", ")", ")", ")"},
+	},
 }
 
 func TestTokenize(t *testing.T) {

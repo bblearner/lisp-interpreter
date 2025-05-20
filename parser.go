@@ -13,14 +13,18 @@ type node struct {
 }
 
 func (n node) String() string {
-	if n.val != "" {
+	if n.val == "" && len(n.childNodes) == 0 {
+		return "()"
+	}
+
+	if len(n.childNodes) == 0 {
 		return n.val
 	} else {
 		childStrs := []string{}
 		for _, child := range n.childNodes {
 			childStrs = append(childStrs, child.String())
 		}
-		return fmt.Sprintf("(%s)", strings.Join(childStrs, " "))
+		return fmt.Sprintf("(%s%s)", n.val+" ", strings.Join(childStrs, " "))
 	}
 }
 
@@ -60,9 +64,13 @@ func parse(tokens []string) (*node, error) {
 				currentNode = currentNode.parent
 			}
 		} else {
-			temp := NewNode(token)
-			temp.parent = currentNode
-			currentNode.childNodes = append(currentNode.childNodes, temp)
+			if currentNode.val == "" {
+				currentNode.val = token
+			} else {
+				temp := NewNode(token)
+				temp.parent = currentNode
+				currentNode.childNodes = append(currentNode.childNodes, temp)
+			}
 		}
 	}
 

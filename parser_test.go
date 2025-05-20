@@ -15,7 +15,7 @@ var parserTests = []struct {
 	},
 	{
 		tokens:   []string{"(", "let", "(", "(", "str", "\"Hello, world!\"", ")", ")", "(", "string-upcase", "str", ")", ")"},
-		expected: `(let ((str "Hello, world!")) (string-upcase str))`,
+		expected: `(let ( (str "Hello, world!")) (string-upcase str))`,
 	},
 	{
 		tokens:   []string{"(", "defun", "sum", "(", "&rest", "numbers", ")", "(", "reduce", "#'+", "numbers", ")", ")"},
@@ -27,7 +27,11 @@ var parserTests = []struct {
 	},
 	{
 		tokens:   []string{"(", "defun", "fib", "(", "n", ")", "\"Return the nth Fibonacci number.\"", "(", "if", "(", "<", "n", "2", ")", "n", "(", "+", "(", "fib", "(", "-", "n", "1", ")", ")", "(", "fib", "(", "-", "n", "2", ")", ")", ")", ")", ")"},
-		expected: `(defun fib (n) "Return the nth Fibonacci number." (if (< n 2) n (+ (fib (- n 1)) (fib (- n 2)))))`,
+		expected: `(defun fib n "Return the nth Fibonacci number." (if (< n 2) n (+ (fib (- n 1)) (fib (- n 2)))))`,
+	},
+	{
+		tokens:   []string{"(", "defun", "fact", "(", "n", ")", "(", "if", "(", "<=", "n", "1", ")", "1", "(", "*", "n", "(", "fact", "(", "-", "n", "1", ")", ")", ")", ")", ")"},
+		expected: `(defun fact n (if (<= n 1) 1 (* n (fact (- n 1)))))`,
 	},
 }
 
